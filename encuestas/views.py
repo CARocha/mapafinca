@@ -1375,7 +1375,7 @@ def ingresos(request, template="indicadores/ingresos.html"):
                                     cultivostradicionales__cultivo=obj)
             cosechada = cultivo.aggregate(t=Sum('cultivostradicionales__cantidad_cosechada'))['t']
             venta = cultivo.aggregate(t=Sum('cultivostradicionales__venta'))['t']
-            precio = cultivo.aggregate(t=Avg('cultivostradicionales__precio'))['t']
+            precio = cultivo.filter(cultivostradicionales__precio__gte=1).aggregate(t=Avg('cultivostradicionales__precio'))['t']
             try:
                 ingreso = venta * precio
             except:
@@ -1406,7 +1406,7 @@ def ingresos(request, template="indicadores/ingresos.html"):
                                     cultivoshuertosfamiliares__cultivo=obj)
             cosechada = cultivo.aggregate(t=Sum('cultivoshuertosfamiliares__cantidad_cosechada'))['t']
             venta = cultivo.aggregate(t=Sum('cultivoshuertosfamiliares__venta'))['t']
-            precio = cultivo.aggregate(t=Avg('cultivoshuertosfamiliares__precio'))['t']
+            precio = cultivo.filter(cultivoshuertosfamiliares__precio__gte=1).aggregate(t=Avg('cultivoshuertosfamiliares__precio'))['t']
             try:
                 ingreso = venta * precio
             except:
@@ -1434,7 +1434,7 @@ def ingresos(request, template="indicadores/ingresos.html"):
                                     cultivosfrutasfinca__cultivo=obj)
             cosechada = cultivo.aggregate(t=Sum('cultivosfrutasfinca__cantidad_cosechada'))['t']
             venta = cultivo.aggregate(t=Sum('cultivosfrutasfinca__venta'))['t']
-            precio = cultivo.aggregate(t=Avg('cultivosfrutasfinca__precio'))['t']
+            precio = cultivo.filter(cultivosfrutasfinca__precio__gte=1).aggregate(t=Avg('cultivosfrutasfinca__precio'))['t']
             try:
                 ingreso = venta * precio
             except:
