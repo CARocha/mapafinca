@@ -682,7 +682,7 @@ class CostoFrutas(models.Model):
     costo = models.FloatField('Costo total en C$')
 
     class Meta:
-        verbose_name_plural = 'Total Mz y costo para huerto familiar'
+        verbose_name_plural = 'Total Mz y costo para frutas familiar'
 #24 ganaderia mayor y menor otros en la finca
 
 class Animales(models.Model):

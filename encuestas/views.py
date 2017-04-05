@@ -1459,9 +1459,9 @@ def ingresos(request, template="indicadores/ingresos.html"):
         for obj in Animales.objects.all():
             cultivo = filtro.filter(year=year[0],
                                     ganaderia__animal=obj)
-            cantidad = cultivo.aggregate(t=Avg('ganaderia__cantidad'))['t']
+            cantidad = cultivo.aggregate(t=Sum('ganaderia__cantidad'))['t']
             venta = cultivo.aggregate(t=Sum('ganaderia__cantidad_vendida'))['t']
-            precio = cultivo.aggregate(t=Avg('ganaderia__precio'))['t']
+            precio = cultivo.filter(ganaderia__precio__gte=1).aggregate(t=Avg('ganaderia__precio'))['t']
             try:
                 ingreso = venta * precio
             except:
@@ -1482,9 +1482,14 @@ def ingresos(request, template="indicadores/ingresos.html"):
         for obj in ProductoProcesado.objects.all():
             cultivo = filtro.filter(year=year[0],
                                     procesamiento__producto=obj)
-            cantidad = cultivo.aggregate(t=Avg('procesamiento__cantidad_total'))['t']
+            cantidad = cultivo.aggregate(t=Sum('procesamiento__cantidad_total'))['t']
             venta = cultivo.aggregate(t=Sum('procesamiento__cantidad_vendida'))['t']
-            precio = cultivo.aggregate(t=Avg('procesamiento__precio'))['t']
+
+            #if cultivo.procesamiento__precio >=1:
+                #print "hay valor"
+            
+            precio = cultivo.filter(procesamiento__precio__gte=1).aggregate(t=Avg('procesamiento__precio'))['t']
+            
             try:
                 ingreso = venta * precio
             except:
