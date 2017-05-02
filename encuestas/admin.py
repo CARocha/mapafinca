@@ -133,9 +133,19 @@ class InlineGanaderia(admin.TabularInline):
     model = Ganaderia
     extra = 1
 
+class InlineCostoGanaderia(admin.TabularInline):
+    model = CostoGanaderia
+    extra = 1
+    max_num = 1
+
 class InlineProcesamiento(admin.TabularInline):
     model = Procesamiento
     extra = 1
+
+class InlineCostoProcesamiento(admin.TabularInline):
+    model = CostoProcesamiento
+    extra = 1
+    max_num = 1
 
 class InlineIntroducidosTradicionales(admin.TabularInline):
     model = IntroducidosTradicionales
@@ -229,7 +239,8 @@ class AdminEncuesta(admin.ModelAdmin):
                 InlineDistribucionTierra,InlinePercibeIngreso,InlineFuentes,
                 InlineCultivosTradicionales,InlineCultivosHuertosFamiliares,
                 InlineCostoHuerto,InlineCultivosFrutasFinca,InlineCostoFrutas,
-                InlineGanaderia,InlineProcesamiento,InlineIntroducidosTradicionales,
+                InlineGanaderia,InlineCostoGanaderia,InlineProcesamiento,InlineCostoProcesamiento,
+                InlineIntroducidosTradicionales,
                 InlineIntroducidosHuertos,InlineGastoHogar,InlineGastoProduccion,
                 InlinePrestamo,InlinePracticasAgroecologicas,InlineSeguridadAlimentaria,
                 InlineRespuestaNo41,InlineOtrasSeguridad,InlineAlimentosFueraFinca,

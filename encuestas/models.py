@@ -571,6 +571,7 @@ class CultivosTradicionales(models.Model):
     procesamiento = models.FloatField()
     venta = models.FloatField()
     precio = models.FloatField('Precio de venta en C$')
+    precio_consumido = models.FloatField(null=True, blank=True)
     costo = models.FloatField('Costo por Mz en C$')
     mercado = models.ForeignKey(TipoMercado)
     periodo = models.IntegerField(choices=CHOICE_PERIODO)
