@@ -715,6 +715,13 @@ class Ganaderia(models.Model):
     class Meta:
         verbose_name_plural = '24_1 Inventario de ganaderia mayor y menor'
 
+
+class CostoGanaderia(models.Model):
+    encuesta = models.ForeignKey(Encuesta)
+    costo = models.FloatField('Costo total en Moneda local')
+
+    class Meta:
+        verbose_name_plural = 'Costo para ganaderia mayor y menor'
 #procesamiento
 
 class ProductoProcesado(models.Model):
@@ -751,6 +758,13 @@ class Procesamiento(models.Model):
     class Meta:
         verbose_name_plural = '24_2 Procesamiento de la producción'
 
+
+class CostoProcesamiento(models.Model):
+    encuesta = models.ForeignKey(Encuesta)
+    costo = models.FloatField('Costo total en Moneda local')
+
+    class Meta:
+        verbose_name_plural = 'Costo para productos procesados'
 #25  de la lista de los  productos  indicar cuales fueron introducidos/providos por
 #el programa medios de vida sostenible
 
