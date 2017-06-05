@@ -57,7 +57,7 @@ def fecha_choice():
     return list(sorted(set(years)))
 
 class ConsultarForm(forms.Form):
-    #fecha = forms.MultipleChoiceField(choices=fecha_choice(), label="Años", required=True)
+    fecha = forms.ChoiceField(choices=fecha_choice(), label="Años", required=True)
     estacion = forms.ChoiceField(choices=CHOICES_ESTACIONES, required=True)
     pais = forms.ModelChoiceField(queryset=Pais.objects.all(), required=True)
     organizacion = forms.ModelMultipleChoiceField(queryset=OrganizacionResp.objects.all(), required=False)

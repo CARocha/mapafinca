@@ -16,8 +16,9 @@ from django.db.models.functions import Coalesce
 def _queryset_filtrado(request):
     params = {}
 
-    #if request.session['fecha']:
-    #    params['year__in'] = request.session['fecha']
+    if request.session['fecha']:
+        params['year'] = request.session['fecha']
+
     if 'estacion' in request.session:
         params['estacion'] = request.session['estacion']
 
@@ -741,6 +742,7 @@ def indicadores1(request, template='indicadores1.html'):
         mensaje = None
         form = ConsultarForm(request.POST)
         if form.is_valid():
+            request.session['fecha'] = form.cleaned_data['fecha']
             request.session['estacion'] = form.cleaned_data['estacion']
             request.session['pais'] = form.cleaned_data['pais']
             request.session['departamento'] = form.cleaned_data['departamento']
@@ -766,6 +768,7 @@ def indicadores1(request, template='indicadores1.html'):
         #filtro = _queryset_filtrado(request)
         if 'pais' in request.session:
             try:
+                del request.session['fecha']
                 del request.session['estacion']
                 del request.session['pais']
                 del request.session['departamento']
