@@ -19,8 +19,8 @@ def _queryset_filtrado(request):
     if request.session['fecha']:
         params['year'] = request.session['fecha']
 
-    if 'estacion' in request.session:
-        params['estacion'] = request.session['estacion']
+    # if 'estacion' in request.session:
+    #     params['estacion'] = request.session['estacion']
 
     if 'pais' in request.session:
         params['entrevistado__pais'] = request.session['pais']
@@ -743,7 +743,7 @@ def indicadores1(request, template='indicadores1.html'):
         form = ConsultarForm(request.POST)
         if form.is_valid():
             request.session['fecha'] = form.cleaned_data['fecha']
-            request.session['estacion'] = form.cleaned_data['estacion']
+            #request.session['estacion'] = form.cleaned_data['estacion']
             request.session['pais'] = form.cleaned_data['pais']
             request.session['departamento'] = form.cleaned_data['departamento']
             request.session['organizacion'] = form.cleaned_data['organizacion']
@@ -769,7 +769,7 @@ def indicadores1(request, template='indicadores1.html'):
         if 'pais' in request.session:
             try:
                 del request.session['fecha']
-                del request.session['estacion']
+                #del request.session['estacion']
                 del request.session['pais']
                 del request.session['departamento']
                 del request.session['organizacion']
@@ -786,35 +786,32 @@ def indicadores1(request, template='indicadores1.html'):
 
 def sexo_duenos(request, template="indicadores/sexo_duenos.html"):
     filtro = _queryset_filtrado(request)
-    years = []
-    for en in Encuesta.objects.order_by('year').values_list('year', flat=True):
-        years.append((en,en))
-    list(set(years))
-
+    
+    years = CHOICES_ESTACIONES
     dicc_sexo_dueno = OrderedDict()
     for year in years:
-        filtro1 = filtro.filter(year=year[0]).count()
-        si_dueno = filtro.filter(year=year[0], dueno=1).count()
-        no_dueno = filtro.filter(year=year[0], dueno=2).count()
+        filtro1 = filtro.filter(estacion=year[0]).count()
+        si_dueno = filtro.filter(estacion=year[0], dueno=1).count()
+        no_dueno = filtro.filter(estacion=year[0], dueno=2).count()
 
         a_nombre = {}
         for obj in CHOICE_DUENO_SI:
-            conteos = filtro.filter(year=year[0], duenosi__si=obj[0]).count()
+            conteos = filtro.filter(estacion=year[0], duenosi__si=obj[0]).count()
             a_nombre[obj[1]] = conteos
 
         situacion = {}
         for obj in CHOICE_DUENO_NO:
-            conteos = filtro.filter(year=year[0], duenono__no=obj[0]).count()
+            conteos = filtro.filter(estacion=year[0], duenono__no=obj[0]).count()
             situacion[obj[1]] = conteos
 
         sexo_jefe_hogar = {}
         for obj in CHOICE_SEXO:
-            conteos = filtro.filter(year=year[0], sexomiembros__sexo=obj[0]).count()
+            conteos = filtro.filter(estacion=year[0], sexomiembros__sexo=obj[0]).count()
             sexo_jefe_hogar[obj[1]] = conteos
 
         personas_habitan = {}
         for obj in CHOICE_SEXO:
-            conteos = filtro.filter(year=year[0], sexomiembros__sexo=obj[0]).aggregate(t=Sum('sexomiembros__cantidad'))['t']
+            conteos = filtro.filter(estacion=year[0], sexomiembros__sexo=obj[0]).aggregate(t=Sum('sexomiembros__cantidad'))['t']
             if conteos > 0:
                 personas_habitan[obj[1]] = conteos
 
@@ -822,7 +819,7 @@ def sexo_duenos(request, template="indicadores/sexo_duenos.html"):
 
         detalle_edad = {}
         for obj in CHOICE_EDAD:
-            conteos = filtro.filter(year=year[0], detallemiembros__edad=obj[0]).aggregate(t=Sum('detallemiembros__cantidad'))['t']
+            conteos = filtro.filter(estacion=year[0], detallemiembros__edad=obj[0]).aggregate(t=Sum('detallemiembros__cantidad'))['t']
             if conteos > 0:
                 detalle_edad[obj[1]] = conteos
 
@@ -832,27 +829,24 @@ def sexo_duenos(request, template="indicadores/sexo_duenos.html"):
 
 def escolaridad(request, template="indicadores/escolaridad.html"):
     filtro = _queryset_filtrado(request)
-
-    years = []
-    for en in Encuesta.objects.order_by('year').values_list('year', flat=True):
-        years.append((en,en))
-    list(set(years))
+    
+    years = CHOICES_ESTACIONES
 
     dicc_escolaridad = OrderedDict()
     dicc_grafo_tipo_educacion = OrderedDict()
     for year in years:
-        filtro1 = filtro.filter(year=year[0]).count()
-        cantidad_miembros_hombres = filtro.filter(year=year[0],
+        filtro1 = filtro.filter(estacion=year[0]).count()
+        cantidad_miembros_hombres = filtro.filter(estacion=year[0],
                                     entrevistado__departamento=request.session['departamento'],
                                     entrevistado__sexo=2,
                                     entrevistado__jefe=1).aggregate(num_total = Sum('escolaridad__total'))['num_total']
 
-        cantidad_miembros_mujeres = filtro.filter(year=year[0],
+        cantidad_miembros_mujeres = filtro.filter(estacion=year[0],
                                     entrevistado__departamento=request.session['departamento'],
                                     entrevistado__sexo=1,
                                     entrevistado__jefe=1).aggregate(num_total = Sum('escolaridad__total'))['num_total']
 
-        grafo_educacion_hombre = filtro.filter(year=year[0],
+        grafo_educacion_hombre = filtro.filter(estacion=year[0],
                                     entrevistado__departamento=request.session['departamento'],
                                     entrevistado__sexo=2,
                                     entrevistado__jefe=1).aggregate(
@@ -864,7 +858,7 @@ def escolaridad(request, template="indicadores/escolaridad.html"):
                                     universitario = Sum('escolaridad__uni_tecnico'),
                                 )
 
-        grafo_educacion_mujer = filtro.filter(year=year[0],
+        grafo_educacion_mujer = filtro.filter(estacion=year[0],
                                     entrevistado__sexo=1,
                                     entrevistado__jefe=1).aggregate(
                                     no_sabe_leer = Sum('escolaridad__no_leer'),
@@ -877,7 +871,7 @@ def escolaridad(request, template="indicadores/escolaridad.html"):
 
         tabla_educacion_hombre = []
         for e in CHOICE_ESCOLARIDAD:
-            objeto = filtro.filter(year=year[0], escolaridad__sexo = e[0],
+            objeto = filtro.filter(estacion=year[0], escolaridad__sexo = e[0],
                     entrevistado__sexo=2,
                     entrevistado__jefe=1).aggregate(num_total = Sum('escolaridad__total'),
                     no_leer = Sum('escolaridad__no_leer'),
@@ -903,7 +897,7 @@ def escolaridad(request, template="indicadores/escolaridad.html"):
 
         tabla_educacion_mujer = []
         for e in CHOICE_ESCOLARIDAD:
-            objeto = filtro.filter(year=year[0],
+            objeto = filtro.filter(estacion=year[0],
                     escolaridad__sexo = e[0],
                     entrevistado__sexo=1,
                     entrevistado__jefe=1).aggregate(num_total = Sum('escolaridad__total'),
@@ -931,32 +925,30 @@ def escolaridad(request, template="indicadores/escolaridad.html"):
 
 def energia(request, template="indicadores/energia.html"):
     filtro = _queryset_filtrado(request)
-    years = []
-    for en in Encuesta.objects.order_by('year').values_list('year', flat=True):
-        years.append((en,en))
-    list(set(years))
+    
+    years = CHOICES_ESTACIONES
 
     dicc_energia = OrderedDict()
     for year in years:
-        filtro1 = filtro.filter(year=year[0]).count()
+        filtro1 = filtro.filter(estacion=year[0]).count()
         grafo_tipo_energia = {}
         for obj in Energia.objects.all():
-            valor = filtro.filter(year=year[0], tipoenergia__tipo=obj).count()
+            valor = filtro.filter(estacion=year[0], tipoenergia__tipo=obj).count()
             grafo_tipo_energia[obj] =  valor
 
         grafo_panel_solar = {}
         for obj in CHOICE_PANEL_SOLAR:
-            valor = filtro.filter(year=year[0], panelsolar__panel=obj[0]).count()
+            valor = filtro.filter(estacion=year[0], panelsolar__panel=obj[0]).count()
             grafo_panel_solar[obj[1]] =  valor
 
         grafo_fuente_energia = {}
         for obj in FuenteEnergia.objects.all():
-            valor = filtro.filter(year=year[0], energiasolarcocinar__fuente=obj).count()
+            valor = filtro.filter(estacion=year[0], energiasolarcocinar__fuente=obj).count()
             grafo_fuente_energia[obj] =  valor
 
         grafo_tipo_cocina = {}
         for obj in Cocinas.objects.all():
-            valor = filtro.filter(year=year[0], tipococinas__cocina=obj).count()
+            valor = filtro.filter(estacion=year[0], tipococinas__cocina=obj).count()
             grafo_tipo_cocina[obj] =  valor
 
         dicc_energia[year[1]] = (grafo_tipo_energia,grafo_panel_solar,grafo_fuente_energia,grafo_tipo_cocina,filtro1)
