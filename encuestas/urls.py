@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'^ciclos-productivos/$', views.productividad, name='ciclos_productivos'),
     url(r'^xls/$', views.save_as_xls, name='salvar_xls'),
     #borrar
-    url(r'^ingreso_optimizado/$', views.ingreso_optimizado, name='ingreso_optimizado'),
+    #url(r'^ingreso_optimizado/$', views.ingreso_optimizado, name='ingreso_optimizado'),
     #filtros por ajax
     url(r'^ajax/depart/$', views.traer_departamento, name='get-depart'),
     url(r'^ajax/organi/$', views.traer_organizacion, name='get-organi'),
