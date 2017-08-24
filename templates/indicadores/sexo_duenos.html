@@ -277,7 +277,10 @@ $(function () {
                     </div>
                     <div class="row fila-grafico">
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 space">
-                            <div class="table-responsive">
+                            <div class="excel">
+                                <a href="#" onclick="exportarXLS('modalidad-{{k}}'); return false;"><span class="fa fa-download"> Exportar a excel</span></a>
+                            </div>
+                            <div class="table-responsive" id="modalidad-{{k}}">
                                 <table class="table table-bordered table-hover">
                                     <tr>
                                         <th>Cuando el jefe es</th>
@@ -295,7 +298,10 @@ $(function () {
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 space">
-                            <div class="table-responsive">
+                        <div class="excel">
+                                <a href="#" onclick="exportarXLS('modalidad1-{{k}}'); return false;"><span class="fa fa-download"> Exportar a excel</span></a>
+                            </div>
+                            <div class="table-responsive" id="modalidad1-{{k}}">
                                 <table class="table table-bordered table-hover">
                                     <tr>
                                         <th>Miembros del hogar</th>
