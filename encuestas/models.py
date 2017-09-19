@@ -689,9 +689,14 @@ class CostoFrutas(models.Model):
 class Animales(models.Model):
     codigo = models.CharField(max_length=4)
     nombre = models.CharField(max_length=250)
+    unidad_medida = models.CharField(max_length=50, null=True, blank=True)
 
     def __unicode__(self):
         return u'%s-%s' % (self.codigo, self.nombre)
+
+    class Meta:
+        verbose_name = "Animal"
+        verbose_name_plural = "Animales"
 
 class Ganaderia(models.Model):
     encuesta = models.ForeignKey(Encuesta)
