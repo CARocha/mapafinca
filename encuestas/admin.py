@@ -310,6 +310,9 @@ class ProductosFueraFincaAdmin(ImportExportModelAdmin):
 
 class OrganizacionAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'pais', 'departamento', 'municipio')
+
+class AnimalAdmin(admin.ModelAdmin):
+    list_display = ('codigo', 'nombre', 'unidad_medida')
 # Register your models here.
 admin.site.register(Encuestadores)
 admin.site.register(OrganizacionResp, OrganizacionAdmin)
