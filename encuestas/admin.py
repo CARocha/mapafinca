@@ -313,6 +313,8 @@ class OrganizacionAdmin(admin.ModelAdmin):
 
 class AnimalAdmin(admin.ModelAdmin):
     list_display = ('codigo', 'nombre', 'unidad_medida')
+    list_display_links = ('codigo', 'nombre')
+    
 # Register your models here.
 admin.site.register(Encuestadores)
 admin.site.register(OrganizacionResp, OrganizacionAdmin)
