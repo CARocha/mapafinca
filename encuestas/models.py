@@ -529,6 +529,8 @@ CHOICE_MEDIDA = (
                 (5, 'Cabeza'),
                 (6, 'Litro'),
                 (7, 'Unidad'),
+                (8, 'Manojo'),
+                (9, 'Tonelada'),
                 )
 
 CHOICE_PERIODO = (
