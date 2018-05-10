@@ -786,7 +786,7 @@ def indicadores1(request, template='indicadores1.html'):
 
 def sexo_duenos(request, template="indicadores/sexo_duenos.html"):
     filtro = _queryset_filtrado(request)
-    
+
     years = CHOICES_ESTACIONES
     dicc_sexo_dueno = OrderedDict()
     for year in years:
@@ -829,7 +829,7 @@ def sexo_duenos(request, template="indicadores/sexo_duenos.html"):
 
 def escolaridad(request, template="indicadores/escolaridad.html"):
     filtro = _queryset_filtrado(request)
-    
+
     years = CHOICES_ESTACIONES
 
     dicc_escolaridad = OrderedDict()
@@ -925,7 +925,7 @@ def escolaridad(request, template="indicadores/escolaridad.html"):
 
 def energia(request, template="indicadores/energia.html"):
     filtro = _queryset_filtrado(request)
-    
+
     years = CHOICES_ESTACIONES
 
     dicc_energia = OrderedDict()
@@ -1054,7 +1054,7 @@ def tierra(request, template="indicadores/tierra.html"):
 
 def prestamos(request, template="indicadores/prestamo.html"):
     filtro = _queryset_filtrado(request)
-    
+
     years = CHOICES_ESTACIONES
 
     dicc_prestamos = OrderedDict()
@@ -1083,7 +1083,7 @@ def prestamos(request, template="indicadores/prestamo.html"):
 
 def practicas(request, template="indicadores/practicas.html"):
     filtro = _queryset_filtrado(request)
-    
+
     years = CHOICES_ESTACIONES
 
     dicc_practicas = OrderedDict()
@@ -1120,7 +1120,7 @@ def practicas(request, template="indicadores/practicas.html"):
 
 def seguridad(request, template="indicadores/seguridad.html"):
     filtro = _queryset_filtrado(request)
-    
+
     years = CHOICES_ESTACIONES
 
     dicc_seguridad = OrderedDict()
@@ -1217,7 +1217,7 @@ def seguridad(request, template="indicadores/seguridad.html"):
 
 def genero(request, template="indicadores/genero.html"):
     filtro = _queryset_filtrado(request)
-    
+
     years = CHOICES_ESTACIONES
 
     dicc_genero = OrderedDict()
@@ -1410,9 +1410,9 @@ def ingresos(request, template="indicadores/ingresos.html"):
 
             #if cultivo.procesamiento__precio >=1:
                 #print "hay valor"
-            
+
             precio = cultivo.filter(procesamiento__precio__gte=1).aggregate(t=Avg('procesamiento__precio'))['t']
-            
+
             try:
                 ingreso = venta * precio
             except:
@@ -1457,7 +1457,7 @@ def ingresos(request, template="indicadores/ingresos.html"):
 
 def gastos(request, template="indicadores/gastos.html"):
     filtro = _queryset_filtrado(request)
-    
+
     years = CHOICES_ESTACIONES
 
     dicc_gastos = OrderedDict()
@@ -1698,7 +1698,7 @@ def calorias(request, template="indicadores/calorias.html"):
     filtro = _queryset_filtrado(request)
 
     numero_total_habitante = filtro.aggregate(t=Sum('sexomiembros__cantidad'))['t']
-    
+
     years = CHOICES_ESTACIONES
 
     dicc_calorias = OrderedDict()
