@@ -511,8 +511,10 @@ class Fuentes(models.Model):
 
     def save(self, *args, **kwargs):
         '''Save sobrecargado para calcular totales'''
-
-        self.total = self.cantidad * self.cantidad_veces
+        try:
+            self.total = self.cantidad * self.cantidad_veces
+        except:
+            self.total = 0
         super(Fuentes, self).save(*args, **kwargs)
 
         models.signals.post_save.send(sender=Encuesta, instance=self.encuesta)
@@ -583,8 +585,10 @@ class CultivosTradicionales(models.Model):
 
     def save(self, *args, **kwargs):
         '''Save sobrecargado para calcular totales'''
-
-        self.total = self.venta * self.precio
+        try:
+            self.total = self.venta * self.precio
+        except:
+            self.total = 0
         super(CultivosTradicionales, self).save(*args, **kwargs)
 
         models.signals.post_save.send(sender=Encuesta, instance=self.encuesta)
@@ -622,8 +626,10 @@ class CultivosHuertosFamiliares(models.Model):
 
     def save(self, *args, **kwargs):
         '''Save sobrecargado para calcular totales'''
-
-        self.total = self.venta * self.precio
+        try:
+            self.total = self.venta * self.precio
+        except:
+            self.total = 0
         super(CultivosHuertosFamiliares, self).save(*args, **kwargs)
 
         models.signals.post_save.send(sender=Encuesta, instance=self.encuesta)
@@ -670,8 +676,10 @@ class CultivosFrutasFinca(models.Model):
 
     def save(self, *args, **kwargs):
         '''Save sobrecargado para calcular totales'''
-
-        self.total = self.venta * self.precio
+        try:
+            self.total = self.venta * self.precio
+        except:
+            self.total = 0
         super(CultivosFrutasFinca, self).save(*args, **kwargs)
 
         models.signals.post_save.send(sender=Encuesta, instance=self.encuesta)
@@ -715,7 +723,10 @@ class Ganaderia(models.Model):
     def save(self, *args, **kwargs):
         '''Save sobrecargado para calcular totales'''
 
-        self.total = self.cantidad_vendida * self.precio
+        try:
+            self.total = self.cantidad_vendida * self.precio
+        except:
+            self.total = 0
         super(Ganaderia, self).save(*args, **kwargs)
 
         models.signals.post_save.send(sender=Encuesta, instance=self.encuesta)
@@ -758,7 +769,10 @@ class Procesamiento(models.Model):
     def save(self, *args, **kwargs):
         '''Save sobrecargado para calcular totales'''
 
-        self.total = self.cantidad_vendida * self.precio
+        try:
+            self.total = self.cantidad_vendida * self.precio
+        except:
+            self.total = 0
         super(Procesamiento, self).save(*args, **kwargs)
 
         models.signals.post_save.send(sender=Encuesta, instance=self.encuesta)
@@ -820,7 +834,10 @@ class GastoHogar(models.Model):
     def save(self, *args, **kwargs):
         '''Save sobrecargado para calcular totales'''
 
-        self.total = self.cantidad * self.cantidad_veces
+        try:
+            self.total = self.cantidad * self.cantidad_veces
+        except:
+            self.total = 0
         super(GastoHogar, self).save(*args, **kwargs)
 
         models.signals.post_save.send(sender=Encuesta, instance=self.encuesta)
@@ -844,8 +861,10 @@ class GastoProduccion(models.Model):
 
     def save(self, *args, **kwargs):
         '''Save sobrecargado para calcular totales'''
-
-        self.total = self.cantidad * self.cantidad_veces
+        try:
+            self.total = self.cantidad * self.cantidad_veces
+        except:
+            self.total = 0
         super(GastoProduccion, self).save(*args, **kwargs)
 
         models.signals.post_save.send(sender=Encuesta, instance=self.encuesta)
@@ -1046,7 +1065,10 @@ class AlimentosFueraFinca(models.Model):
     def save(self, *args, **kwargs):
         '''Save sobrecargado para calcular totales'''
 
-        self.total = self.cantidad * self.precio
+        try:
+            self.total = self.cantidad * self.precio
+        except:
+            self.total = 0
         super(AlimentosFueraFinca, self).save(*args, **kwargs)
 
         # activar signal post_save de encuesta
