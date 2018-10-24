@@ -90,7 +90,7 @@ def obtener_mapa_dashboard(request):
     if request.is_ajax():
         lista = []
         for objeto in Encuesta.objects.filter(entrevistado__departamento=request.session['departamento']).distinct('entrevistado_id'):
-            if objeto.entrevistado.longitud != None and objeto.entrevistado.longitud != '':
+            if objeto.entrevistado.longitud != None and objeto.entrevistado.longitud != '' and objeto.entrevistado.nombre != None:
                 dicc = dict(nombre=objeto.entrevistado.nombre,
                             id=objeto.entrevistado.id,
                             lon=float(objeto.entrevistado.longitud),
@@ -108,7 +108,7 @@ def obtener_mapa_dashboard_pais(request):
     if request.is_ajax():
         lista = []
         for objeto in Encuesta.objects.filter(entrevistado__pais=request.session['pais']).distinct('entrevistado_id'):
-            if objeto.entrevistado.longitud != None and objeto.entrevistado.longitud != '':
+            if objeto.entrevistado.longitud != None and objeto.entrevistado.longitud != '' and objeto.entrevistado.nombre != None:
                 dicc = dict(nombre=objeto.entrevistado.nombre,
                             id=objeto.entrevistado.id,
                             lon=float(objeto.entrevistado.longitud),
